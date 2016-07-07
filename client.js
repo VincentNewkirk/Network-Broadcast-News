@@ -3,7 +3,8 @@ const net = require('net');
 const client = new net.Socket();
 
 client.connect({port: 6969}, (() => {
-  console.log('connected to server');
+  console.log('Connected to server!');
+  console.log('Please enter a username:');
   process.stdin.on('data', (data) => {
     client.write(data);
     // process.stdin.write(data.toString());

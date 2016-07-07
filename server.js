@@ -9,11 +9,17 @@ const server = net.createServer((socket) => {
   socket.on('data', (data) => {
     process.stdout.write(data.toString());
     for(var i = 0; i < users.length; i++){
+      if(socket.name === undefined){
+        socket.name = data.toString().replace(/(\r\n|\n|\r)/gm,"");
+        console.log(socket.name);
+        return;
+      }
     //if sender is same as receiver don't send anything
-    if(users[i] !== socket){
-      users[i].write(data);
+     else if(users[i] !== socket){
+      users[i].write(socket.name + ': ' + data);
       }
     }
+    process.stdout.write(socket.name + ': ' + data);
   });
 });
 process.stdin.on('data', (data) => {
