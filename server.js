@@ -23,6 +23,20 @@ const server = net.createServer((socket) => {
   });
 });
 process.stdin.on('data', (data) => {
+  if(data.indexOf('//kick') >= 0){
+    let tempArr = data.toString().split('');
+    for(var i = 0; i < 7; i++){
+      tempArr.shift();
+    }
+    tempArr.pop();
+    let nameToClose = tempArr.join('');
+    for(let i = 0; i < users.length; i++){
+      if(users[i].name === nameToClose){
+        users[i].destroy();
+      }
+    }
+
+  }
   // server.write(data);
   for(var i = 0; i < users.length; i++){
     users[i].write('[ADMIN]: '  + data);
