@@ -9,12 +9,18 @@ const server = net.createServer((socket) => {
   socket.on('data', (data) => {
     process.stdout.write(data.toString());
     for(var i = 0; i < users.length; i++){
+    //if sender is same as receiver don't send anything
+    if(users[i] !== socket){
       users[i].write(data);
+      }
     }
   });
-  // process.stdout.on('data', (data) => {
-  //   socket.stdout.write(data);
-  // });
+});
+process.stdin.on('data', (data) => {
+  // server.write(data);
+  for(var i = 0; i < users.length; i++){
+    users[i].write('[ADMIN]: '  + data);
+  }
 });
 
 server.listen('6969');
